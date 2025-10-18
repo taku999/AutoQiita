@@ -11,15 +11,17 @@ autoqiita_save_current() {
         return 1
     fi
     
+    local current_dir="$(pwd)"
     local file_path="$1"
     
     # 相対パスを絶対パスに変換
     if [[ ! "$file_path" = /* ]]; then
-        file_path="$(pwd)/$file_path"
+        file_path="$current_dir/$file_path"
     fi
     
     echo "📝 ファイルをQiitaに保存中: $file_path"
-    autoqiita save "$file_path"
+    (cd "/home/bell999/github/AutoQiita" && uv run autoqiita save "$file_path")
+    cd "$current_dir"
 }
 
 # 現在のディレクトリをワークスペースに追加
@@ -28,16 +30,19 @@ autoqiita_add_here() {
     local current_dir="$(pwd)"
     
     echo "📁 現在のディレクトリをワークスペースに追加: $workspace_name"
-    autoqiita workspace add "$current_dir" --name "$workspace_name"
+    (cd "/home/bell999/github/AutoQiita" && uv run autoqiita workspace add "$current_dir" --name "$workspace_name")
+    cd "$current_dir"
 }
 
 # AutoQiitaサーバーのステータス確認
 autoqiita_check() {
+    local current_dir="$(pwd)"
     echo "🔍 AutoQiitaシステム状態:"
-    autoqiita status
+    (cd "/home/bell999/github/AutoQiita" && uv run autoqiita status)
     echo ""
     echo "📋 登録済みワークスペース:"
-    autoqiita workspace list
+    (cd "/home/bell999/github/AutoQiita" && uv run autoqiita workspace list)
+    cd "$current_dir"
 }
 
 # エイリアスを設定
