@@ -180,6 +180,19 @@ uv run autoqiita server
 uv run autoqiita monitor /path/to/project
 ```
 
+### 4. グローバルインストール（推奨）
+
+```bash
+# どこからでもautoqiitaコマンドを使用可能にする
+./install_global.sh
+
+# VSCode統合機能を有効化
+source vscode_integration.sh
+
+# 永続設定（新しいターミナルでも有効）
+echo 'source /path/to/AutoQiita/vscode_integration.sh' >> ~/.bashrc
+```
+
 ## 使用例
 
 ### 基本的な使用
@@ -217,6 +230,76 @@ uv run autoqiita extensions suggest react
 # Go言語ファイルを追加
 uv run autoqiita extensions add .go
 ```
+
+## 🚀 VSCodeでの他フォルダからの使用方法
+
+従来のAutoQiitaはプロジェクトディレクトリ内でのみ実行可能でしたが、**グローバルインストール機能**により、任意のプロジェクトフォルダからAutoQiitaコマンドを実行できるようになりました。
+
+### グローバルインストール
+
+```bash
+# AutoQiitaディレクトリで実行
+cd /path/to/AutoQiita
+./install_global.sh
+```
+
+これにより、システム全体で`autoqiita`コマンドが使用可能になります。
+
+### どこからでも使えるコマンド
+
+```bash
+# 任意のプロジェクトディレクトリで
+cd /path/to/any/project
+
+# ファイルをQiitaに保存
+autoqiita save README.md
+
+# 現在のディレクトリをワークスペースに追加  
+autoqiita workspace add . --name "MyProject"
+
+# システム状態確認
+autoqiita status
+```
+
+### 便利な短縮コマンド
+
+VSCode統合機能により、さらに短いコマンドが利用可能：
+
+```bash
+# VSCode統合機能を有効化
+source /path/to/AutoQiita/vscode_integration.sh
+
+# 短縮コマンド例
+aqs file.md        # ファイルをQiitaに保存
+aqa project-name   # 現在のディレクトリをワークスペースに追加
+aqc                # システム状態確認
+aqh                # ヘルプ表示
+```
+
+### 実際のワークフロー
+
+```bash
+# 1. 新しいプロジェクトで作業開始
+cd /path/to/new/project
+aqa my-new-project    # ワークスペースに追加
+
+# 2. ファイル編集後に即座に保存
+aqs README.md         # Qiitaに保存
+
+# 3. システム状態確認
+aqc                   # 全体状況をチェック
+
+# 4. 自動監視の開始（任意のディレクトリから）
+autoqiita server      # 全ワークスペースを監視
+```
+
+### 主な利点
+
+- ✅ **プロジェクト間の移動不要**: AutoQiitaディレクトリに戻る必要なし
+- ✅ **短縮コマンド**: `aqs`, `aqa`, `aqc`などで高速操作
+- ✅ **VSCode統合**: 統合ターミナルでシームレス使用
+- ✅ **自動パス解決**: 相対パスも絶対パスも自動対応
+- ✅ **永続設定**: 一度設定すれば全プロジェクトで使用可能
 
 ## プロジェクト構成
 
@@ -346,8 +429,9 @@ JSON形式での設定管理により、システム再起動後も設定を保�
 ✅ **柔軟性**: プロジェクトに応じた拡張子管理
 ✅ **効率性**: uvによる高速環境構築
 ✅ **保守性**: モジュラー設計による拡張性
+✅ **ユーザビリティ**: どのプロジェクトからでも使える短縮コマンド
 
-開発者の知識共有を促進し、セキュリティを担保しながら効率的な記事作成を支援するシステムとなりました。
+開発者の知識共有を促進し、セキュリティを担保しながら効率的な記事作成を支援するシステムとなりました。特に、グローバルインストール機能により、VSCodeで複数プロジェクトを扱う開発者にとってより使いやすいツールとなっています。
 
 ## リポジトリ
 

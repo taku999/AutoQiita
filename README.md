@@ -68,6 +68,157 @@ npm run compile
 # F5キーを押すか、Run > Start Debugging
 ```
 
+## 他のプロジェクトでの使用方法
+
+### 📁 **新しいプロジェクトを監視対象に追加**
+
+#### **方法1: ワークスペース追加（推奨）**
+```bash
+# AutoQiitaディレクトリで実行
+cd /path/to/AutoQiita
+
+# 他のプロジェクトを追加
+uv run autoqiita workspace add /path/to/your/project --name "ProjectName"
+
+# 全ワークスペースを監視するサーバーを起動
+uv run autoqiita server
+```
+
+#### **方法2: 直接監視**
+```bash
+# AutoQiitaディレクトリで実行
+cd /path/to/AutoQiita
+
+# 特定のプロジェクトのみ監視
+uv run autoqiita monitor /path/to/your/project
+```
+
+#### **方法3: Makefileコマンド**
+```bash
+# AutoQiitaディレクトリで実行
+cd /path/to/AutoQiita
+
+# 他のプロジェクトを追加
+make workspace-add-other PATH=/path/to/project NAME=ProjectName
+
+# 全ワークスペース監視
+make monitor-all
+
+# 特定プロジェクト監視
+make monitor-project PATH=/path/to/project
+```
+
+### 🔧 **便利なエイリアス設定**
+```bash
+# エイリアスを読み込み
+source /path/to/AutoQiita/shell_aliases.sh
+
+# または ~/.bashrc に追加
+echo 'source /path/to/AutoQiita/shell_aliases.sh' >> ~/.bashrc
+source ~/.bashrc
+
+# 使用例
+aq-add /path/to/project --name ProjectName
+aq-list
+aq-server
+```
+
+## 🚀 VSCodeでの他フォルダからの使用方法
+
+AutoQiitaをグローバルにインストールすることで、**どのプロジェクトフォルダからでも**AutoQiitaコマンドを実行できます。
+
+### **グローバルインストール**
+
+```bash
+# AutoQiitaディレクトリで実行
+cd /path/to/AutoQiita
+./install_global.sh
+```
+
+これにより、システム全体で`autoqiita`コマンドが使用可能になります。
+
+### **どこからでも使えるコマンド**
+
+```bash
+# 任意のプロジェクトディレクトリで
+cd /path/to/any/project
+
+# ファイルをQiitaに保存
+autoqiita save README.md
+
+# 現在のディレクトリをワークスペースに追加
+autoqiita workspace add . --name "MyProject"
+
+# システム状態確認
+autoqiita status
+
+# ワークスペース一覧
+autoqiita workspace list
+```
+
+### **📱 便利な短縮コマンド**
+
+VSCode統合機能を使用すると、さらに短いコマンドが利用できます：
+
+```bash
+# VSCode統合機能を有効化
+source /path/to/AutoQiita/vscode_integration.sh
+
+# 短縮コマンド例
+aqs file.md        # ファイルをQiitaに保存
+aqa project-name   # 現在のディレクトリをワークスペースに追加
+aqc                # システム状態確認
+aqh                # ヘルプ表示
+```
+
+### **🔄 自動ロード設定**
+
+新しいターミナルでも自動的に短縮コマンドを使えるようにするには：
+
+```bash
+# bashrcに自動ロード設定を追加
+echo "
+# AutoQiita VSCode Integration
+if [ -f /path/to/AutoQiita/vscode_integration.sh ]; then
+    source /path/to/AutoQiita/vscode_integration.sh
+fi" >> ~/.bashrc
+
+# 設定を即座に反映
+source ~/.bashrc
+```
+
+### **💡 VSCodeでの実際の使用例**
+
+1. **新しいプロジェクトで作業開始**：
+   ```bash
+   cd /path/to/new/project
+   aqa my-new-project    # ワークスペースに追加
+   ```
+
+2. **ファイル編集後に即座に保存**：
+   ```bash
+   aqs README.md         # Qiitaに保存
+   ```
+
+3. **システム状態確認**：
+   ```bash
+   aqc                   # 全体状況をチェック
+   ```
+
+4. **自動監視の開始**：
+   ```bash
+   # 任意のディレクトリから
+   autoqiita server      # 全ワークスペースを監視
+   ```
+
+### **✨ 主な利点**
+
+- ✅ **プロジェクト間の移動不要**: AutoQiitaディレクトリに戻る必要なし
+- ✅ **短縮コマンド**: `aqs`, `aqa`, `aqc`などで高速操作
+- ✅ **VSCode統合**: 統合ターミナルでシームレスに使用
+- ✅ **自動パス解決**: 相対パスも絶対パスも自動対応
+- ✅ **永続設定**: 一度設定すれば全プロジェクトで使用可能
+
 ## 使用方法
 
 ### コマンドライン
@@ -105,12 +256,45 @@ uv run autoqiita status
 
 ### VSCodeコマンド
 
+#### **コマンドパレット使用**
 1. コマンドパレット（Ctrl+Shift+P）を開く
 2. 以下のコマンドを実行：
    - `Start AutoQiita Monitoring` - 監視開始
    - `Stop AutoQiita Monitoring` - 監視停止
    - `Save Current File to Qiita` - 現在のファイルを手動保存
    - `Show AutoQiita Status` - 状態表示
+
+#### **統合ターミナル使用（推奨）**
+VSCodeの統合ターミナル（Ctrl+`）で以下のコマンドが使用可能：
+
+```bash
+# 基本コマンド（グローバルインストール後）
+autoqiita save current-file.md    # 現在のファイルを保存
+autoqiita workspace add .         # 現在のフォルダを追加
+autoqiita status                  # 状態確認
+
+# 短縮コマンド（vscode_integration.sh読み込み後）
+aqs file.md                       # クイック保存
+aqa project-name                  # ワークスペース追加
+aqc                               # 状態確認
+```
+
+#### **ワークフロー例**
+```bash
+# 1. 新しいプロジェクトを開く
+# File > Open Folder で任意のプロジェクトを開く
+
+# 2. 統合ターミナルを開く（Ctrl+`）
+
+# 3. AutoQiitaに追加
+aqa my-project
+
+# 4. ファイル編集後に保存
+aqs README.md
+
+# 5. 自動監視を開始（オプション）
+autoqiita server &   # バックグラウンドで実行
+```
 
 ## 開発
 

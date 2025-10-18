@@ -4,9 +4,51 @@
       "name": "AutoQiita",
       "path": "/home/bell999/github/AutoQiita",
       "enabled": true,
-      "watched_extensions": [".md", ".py", ".js", ".ts", ".txt", ".rst"],
-      "ignore_patterns": [".git", "__pycache__", "node_modules", ".vscode"],
-      "qiita_tags": [{"name": "AutoQiita", "versions": []}]
+      "watched_extensions": [
+        ".md",
+        ".py",
+        ".js",
+        ".ts",
+        ".txt",
+        ".rst"
+      ],
+      "ignore_patterns": [
+        ".git",
+        "__pycache__",
+        "node_modules",
+        ".vscode"
+      ],
+      "qiita_tags": [
+        {
+          "name": "AutoQiita",
+          "versions": []
+        }
+      ]
+    },
+    {
+      "name": "kokusai",
+      "path": "/home/bell999/github/kokusai",
+      "enabled": true,
+      "watched_extensions": [
+        ".md",
+        ".py",
+        ".js",
+        ".ts",
+        ".txt",
+        ".rst"
+      ],
+      "ignore_patterns": [
+        ".git",
+        "__pycache__",
+        "node_modules",
+        ".vscode"
+      ],
+      "qiita_tags": [
+        {
+          "name": "kokusai-project",
+          "versions": []
+        }
+      ]
     }
   ]
 }

@@ -60,6 +60,13 @@ status: ## システム状態を確認
 workspace-add: ## 現在のディレクトリをワークスペースに追加
 	uv run autoqiita workspace add . --name "$(shell basename $(PWD))"
 
+workspace-add-other: ## 他のプロジェクトをワークスペースに追加 (make workspace-add-other PATH=/path/to/project NAME=ProjectName)
+	@if [ -z "$(PATH)" ] || [ -z "$(NAME)" ]; then \
+		echo "使用方法: make workspace-add-other PATH=/path/to/project NAME=ProjectName"; \
+	else \
+		uv run autoqiita workspace add $(PATH) --name $(NAME); \
+	fi
+
 workspace-list: ## 登録済みワークスペースを一覧表示
 	uv run autoqiita workspace list
 
@@ -87,6 +94,18 @@ article-save-simple: ## 作成した記事をQiitaに保存（重複チェック
 
 article-scan: ## 記事のセキュリティスキャンのみ実行
 	uv run autoqiita security scan article_draft.md
+
+monitor-all: ## 全ワークスペースを監視するサーバーを起動
+	@echo "🚀 全ワークスペース監視サーバーを起動中..."
+	uv run autoqiita server
+
+monitor-project: ## 指定プロジェクトのみ監視 (make monitor-project PATH=/path/to/project)
+	@if [ -z "$(PATH)" ]; then \
+		echo "使用方法: make monitor-project PATH=/path/to/project"; \
+	else \
+		echo "🔍 $(PATH) を監視中..."; \
+		uv run autoqiita monitor $(PATH); \
+	fi
 
 # 開発用のクイックコマンド
 quick-start: workspace-add server ## ワークスペース追加 + サーバー起動
