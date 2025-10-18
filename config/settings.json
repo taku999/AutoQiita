@@ -1,0 +1,33 @@
+{
+  "workspace": {
+    "watched_extensions": [".md", ".py", ".js", ".ts", ".txt", ".rst", ".json", ".yaml", ".yml"],
+    "ignore_patterns": [
+      ".git",
+      "__pycache__",
+      "node_modules", 
+      ".vscode",
+      ".pytest_cache",
+      ".mypy_cache",
+      "dist",
+      "build",
+      ".env",
+      ".env.local",
+      "*.log",
+      "*.tmp"
+    ]
+  },
+  "qiita": {
+    "default_tags": [
+      {"name": "備忘録", "versions": []},
+      {"name": "VSCode", "versions": []}
+    ],
+    "draft_settings": {
+      "private": true,
+      "title_prefix": "[AutoSave]"
+    }
+  },
+  "monitoring": {
+    "debounce_time_seconds": 2,
+    "auto_save_delay_seconds": 5
+  }
+}
